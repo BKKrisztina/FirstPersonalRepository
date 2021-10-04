@@ -1,5 +1,5 @@
 import application.database.*;
-import application.util.CredentialsMapQuery;
+import application.module.CredentialsMapQuery;
 import application.util.ScreenManager;
 
 public class Main {

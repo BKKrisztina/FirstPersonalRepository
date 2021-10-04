@@ -1,11 +1,12 @@
 package application.database;
 
-import application.models.*;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+
 import java.util.Properties;
+
+/**
+ * this class is entitled for creating the SQL database connection
+ */
 
 public class DBEngine {
 

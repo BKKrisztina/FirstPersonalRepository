@@ -2,6 +2,10 @@ package application.models;
 
 import java.sql.Timestamp;
 
+/**
+ * this class is to handle the SQL database 'MyBlog' comments table data
+ */
+
 public class BlogPosts {
 
     private int blogPostID;

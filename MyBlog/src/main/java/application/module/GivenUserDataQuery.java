@@ -1,15 +1,19 @@
-package application.util;
+package application.module;
 
 import application.database.DBEngine;
 import application.models.Entitlement;
 import application.models.Users;
+import application.util.ScreenManager;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class GivenUserDataQuery {
-
+    /**
+     * this method handles the query itself, which gives back all of the data of a selected (blog)user
+     * util.ScreenManager calls this method
+     */
 
     DBEngine engine = new DBEngine();
 
@@ -42,6 +46,13 @@ public class GivenUserDataQuery {
         }
         return result;
     }
+
+    /**
+     * this method uses the result of the method above,
+     * checks the entitlement of the user after credentials verification,
+     * so then options for next step can be offered to the user
+     * util.screenmanager calls this method
+     */
 
     public void entitlementChecker(Users result) {
         if(result.getEntitlement().toString().equals( "USER")) {

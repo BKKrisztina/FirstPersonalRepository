@@ -1,4 +1,4 @@
-package application.util;
+package application.module;
 
 import application.database.DBEngine;
 import application.models.Comments;
@@ -14,10 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListAllCommentsOfBlogQuery {
-
+    /**
+     * this method handles the query itself, which gives back all comments of a selected blogPost
+     * util.QueryManager calls this method
+     */
     DBEngine engine = new DBEngine();
 
-    public List<Comments> listAllCommentsOfBlog (int searchBlogPostID) {
+    public List<Comments> listAllCommentsOfBlogPosts(int searchBlogPostID) {
 //SELECT * FROM subjects JOIN subjects2courses ON subjects.id = subjects2courses.subject_id
 // WHERE subjects2courses.schedule_day ='saturday' OR subjects2courses.schedule_day ='sunday' ORDER BY schedule_day,schedule_hour;
         String query = "SELECT * FROM comments JOIN blogposts ON blog_ref_ID = blogposts.blogposts_id WHERE blogposts_id = ?";

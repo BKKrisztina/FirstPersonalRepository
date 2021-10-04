@@ -1,5 +1,8 @@
 package application.helpers;
 
+/**
+ * this class helps to convert the enum format in SQL database to enum format in IntelliJ
+ */
 public class EnumHelper {
 
         public static <T extends Enum<T>> int getDBIndex(Enum<T> enumToUse) {

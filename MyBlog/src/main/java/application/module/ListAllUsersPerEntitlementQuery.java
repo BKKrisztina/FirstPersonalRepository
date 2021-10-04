@@ -1,4 +1,4 @@
-package application.util;
+package application.module;
 
 import application.database.DBEngine;
 import application.models.Entitlement;
@@ -9,6 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListAllUsersPerEntitlementQuery {
+
+    /**
+     * this method handles the query itself, which gives back a list of users per selected entitlement(user/moderator/admin)
+     */
 
     DBEngine engine = new DBEngine();
 

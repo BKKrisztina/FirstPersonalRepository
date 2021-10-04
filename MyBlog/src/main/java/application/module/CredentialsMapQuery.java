@@ -1,4 +1,4 @@
-package application.util;
+package application.module;
 
 import application.database.DBEngine;
 
@@ -10,6 +10,11 @@ import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * all classes in 'module' package are for handle an SQL query
+ * the method in this class run a query which gives back the users name and related password, saves in a map,
+ * which then can be used by another method to verify if the password entered by the user is correct
+ */
 
 public class CredentialsMapQuery {
 

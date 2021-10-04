@@ -1,5 +1,7 @@
 package application.models;
-
+/**
+ * this enum is for the SQL database 'MyBlog' font_type enum in blog_templates table
+ */
 public enum FontType {
     ABADI_MT_CONDENSED_LIGHT,
     ALBERTUS_EXTRA_BOLD,

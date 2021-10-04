@@ -1,4 +1,4 @@
-package application.util;
+package application.module;
 
 import application.database.DBEngine;
 import application.models.Blog;
@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ListGivenUsersBlogsQuery {
+    /**
+     * this method handles the query itself, which gives back all of the blogs created by a selected (blog)user
+     * util.QueryManager calls this method
+     */
 
     DBEngine engine = new DBEngine();
 

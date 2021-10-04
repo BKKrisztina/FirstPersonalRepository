@@ -1,5 +1,9 @@
 package application.models;
 
+/**
+ * this enum is for the SQL database 'MyBlog' font_colour enum in blog_templates table
+ */
+
 public enum FontColour {
     RED,
     CYAN,

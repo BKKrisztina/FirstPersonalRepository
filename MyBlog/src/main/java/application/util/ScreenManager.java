@@ -1,12 +1,15 @@
 package application.util;
+import application.module.CredentialsMapQuery;
+import application.module.GivenUserDataQuery;
 import lombok.Getter;
 import lombok.Setter;
-
-import java.util.List;
-import java.util.Map;
 import java.util.Scanner;
 
-import static application.util.GivenUserDataQuery.*;
+/**
+ * this class is for interacting with the user
+ * -- stores messages to user
+ * -- stores methods requesting user input and direct to next step method
+ */
 
 public class ScreenManager {
     @Getter
@@ -25,19 +28,23 @@ public class ScreenManager {
     @Setter
     private int attemptCounter = 0;
 
+    private String welcome = "Welcome to myBlog community!";
+    private String ifRegistered = "Are you a registered member already?" + "\n" + "Choose Y/N";
+    private String attemptLimitPassed = "Attempt limit passed!";
+    private static String wrongInput = "WRONG INPUT!";
 
     public ScreenManager() {
-
     }
-    static QueryHandler queryHandler = new QueryHandler();
+
+    static QueryManager queryHandler = new QueryManager();
     CredentialsMapQuery credentialsMapQuery = new CredentialsMapQuery();
 
     public String ifRegistered() {
 
         Scanner scanner = new Scanner(System.in);
-        if (attemptCounter < 3) {
-            System.out.println("Welcome to myBlog community!");
-            System.out.println("Are you a registered member already?" + "\n" + "Choose Y/N");
+        if (attemptCounter < 4) {
+            System.out.println(welcome);
+            System.out.println(ifRegistered);
             String registeredAnswer = scanner.nextLine();
             attemptCounter += 1;
             if (registeredAnswer.equalsIgnoreCase("Y")) {
@@ -49,15 +56,17 @@ public class ScreenManager {
                 ifRegistered();
             }
         } else {
-            System.out.println("Attempt limit passed!");
+            System.out.println(attemptLimitPassed);
         }
         return registeredAnswer;
     }
     public String askUserName() {
         Scanner scanner = new Scanner(System.in);
-        if (attemptCounter < 6) {
+        attemptCounter = 0;
+        if (attemptCounter < 4) {
             System.out.println("Please enter your Username");
             String usernameEntered = scanner.nextLine();
+            attemptCounter += 1;
 //TODO nullpointer exception
             try {
                 if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
@@ -69,15 +78,17 @@ public class ScreenManager {
                 e.printStackTrace();
                 System.out.println("Nullpointer Exception");}
         }else{
-        System.out.println("Attempt limit passed!");}
+        System.out.println(attemptLimitPassed);}
             return usernameEntered;
         }
 
     public String askPassword(String usernameEntered) {
         Scanner scanner = new Scanner(System.in);
-        if (attemptCounter < 6) {
+        attemptCounter = 0;
+        if (attemptCounter < 4) {
             System.out.println("Please enter your Password");
             String passwordEntered = scanner.nextLine();
+            attemptCounter += 1;
             if (credentialsMapQuery.credentialsMap.get(usernameEntered).equals(passwordEntered)) {
                 //System.out.println("The key for value " + passwordEntered + " is " + entry.getKey());
                 System.out.println("Credentials are ok, you can continue");
@@ -91,7 +102,7 @@ public class ScreenManager {
                     wrongPW();
         }}
         else{
-                System.out.println("Attempt limit passed!");}
+                System.out.println(attemptLimitPassed);}
         return passwordEntered;
     }
 
@@ -105,7 +116,7 @@ public class ScreenManager {
         int userOpAnswer = scanner.nextInt();
         if((userOpAnswer == 3) ||(userOpAnswer == 4) ||(userOpAnswer == 5)){
         queryHandler.querySelector(userOpAnswer);}
-        System.out.println("WRONG INPUT!");
+        System.out.println(wrongInput);
         return userOpAnswer;
     }
 
@@ -120,7 +131,7 @@ public class ScreenManager {
         int moderatorOpAnswer = scanner.nextInt();
         if((moderatorOpAnswer == 3) ||(moderatorOpAnswer == 4) ||(moderatorOpAnswer == 5) ||(moderatorOpAnswer == 6)){
         queryHandler.querySelector(moderatorOpAnswer);}
-        System.out.println("WRONG INPUT!");
+        System.out.println(wrongInput);
         return moderatorOpAnswer;
     }
 
@@ -139,7 +150,7 @@ public class ScreenManager {
                 ||(adminOpAnswer == 5) ||(adminOpAnswer == 6)){
         queryHandler.querySelector(adminOpAnswer);}
 //TODO WRONG INPUT -ot mindig kiirja!!!!!
-        System.out.println("WRONG INPUT!"+"\n");
+        System.out.println(wrongInput+"\n");
         return adminOpAnswer;
     }
 
@@ -189,7 +200,7 @@ public class ScreenManager {
             notRegistered();
 
         } catch (Exception e) {
-           System.out.println("WRONG INPUT!" +"\n");
+           System.out.println(wrongInput +"\n");
            notRegistered();}
 
        }else {

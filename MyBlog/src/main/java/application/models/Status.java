@@ -1,5 +1,8 @@
 package application.models;
 
+/**
+ * this enum is for the SQL database 'MyBlog' status enum in blog_templates table
+ */
 public enum Status {
     DRAFT,
     PUBLISHED,

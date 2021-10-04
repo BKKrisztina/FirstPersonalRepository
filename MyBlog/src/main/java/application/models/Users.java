@@ -1,7 +1,9 @@
 package application.models;
 
 import java.sql.Timestamp;
-
+/**
+ * this class is to handle the SQL database 'MyBlog' users table data
+ */
 public class Users {
 
     private int userID;

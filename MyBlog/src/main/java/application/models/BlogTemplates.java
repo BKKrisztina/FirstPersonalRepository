@@ -1,5 +1,8 @@
 package application.models;
 
+/**
+ * this class is to handle the SQL database 'MyBlog' blog_templates table data
+ */
 public class BlogTemplates {
 
     private int blogTemplateID;

@@ -1,5 +1,9 @@
 package application.models;
 
+/**
+ * this enum is for the SQL database 'MyBlog' entitlement enum in users table
+ */
+
 public enum Entitlement {
 
     ADMIN,

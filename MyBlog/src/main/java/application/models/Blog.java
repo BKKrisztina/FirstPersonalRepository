@@ -4,6 +4,10 @@ import java.sql.Timestamp;
 
 public class Blog {
 
+    /**
+     * this class is to handle the SQL database 'MyBlog' blogs table data
+     */
+
     private String blogName;
     private int creatorID;
     private Timestamp creationTime;
