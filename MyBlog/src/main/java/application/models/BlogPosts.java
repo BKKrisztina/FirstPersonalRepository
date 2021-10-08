@@ -1,8 +1,6 @@
 package application.models;
 
 import lombok.Getter;
-
-import java.sql.Time;
 import java.time.LocalDateTime;
 
 /**

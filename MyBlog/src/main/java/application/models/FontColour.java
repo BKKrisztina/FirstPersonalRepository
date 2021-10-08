@@ -35,9 +35,4 @@ public enum FontColour {
         }
         return FontColour.BLACK;
     }
-
-    public int getDBIndex() {
-        return ordinal() + 1;
-    }
-
 }

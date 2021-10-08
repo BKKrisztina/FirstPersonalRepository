@@ -1,5 +1,6 @@
 package application.models;
 
+import lombok.Getter;
 
 import java.time.LocalDateTime;
 
@@ -8,16 +9,20 @@ import java.time.LocalDateTime;
  */
 public class Comments {
 
+    @Getter
     private int commentID;
+    @Getter
     private String commentText;
+    @Getter
     private LocalDateTime commentTime; // String
+    @Getter
     private Status status;
+    @Getter
     private int commenterID;
+    @Getter
     private int commentBlogID;
+    @Getter
     private int history_comment_ID;
-
-    public Comments() {
-    }
 
     public Comments(int commentID, String commentText, LocalDateTime commentTime, Status status, int commenterID, int commentBlogID, int history_comment_ID) {
         this.commentID = commentID;
@@ -29,59 +34,4 @@ public class Comments {
         this.history_comment_ID = history_comment_ID;
     }
 
-    public int getCommentID() {
-        return commentID;
-    }
-
-    public void setCommentID(int commentID) {
-        this.commentID = commentID;
-    }
-
-    public String getCommentText() {
-        return commentText;
-    }
-
-    public void setCommentText(String commentText) {
-        this.commentText = commentText;
-    }
-
-    public LocalDateTime getCommentTime() {
-        return commentTime;
-    }
-
-    public void setCommentTime(LocalDateTime commentTime) {
-        this.commentTime = commentTime;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public int getCommenterID() {
-        return commenterID;
-    }
-
-    public void setCommenterID(int commenterID) {
-        this.commenterID = commenterID;
-    }
-
-    public int getCommentBlogID() {
-        return commentBlogID;
-    }
-
-    public void setCommentBlogID(int commentBlogID) {
-        this.commentBlogID = commentBlogID;
-    }
-
-    public int getHistory_comment_ID() {
-        return history_comment_ID;
-    }
-
-    public void setHistory_comment_ID(int history_comment_ID) {
-        this.history_comment_ID = history_comment_ID;
-    }
 }

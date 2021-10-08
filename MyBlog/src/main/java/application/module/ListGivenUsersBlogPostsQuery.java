@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class ListGivenUsersBlogPostsQuery {
     /**
      * this method handles the query itself, which gives back all of the bog posts created by a selected (blog)user

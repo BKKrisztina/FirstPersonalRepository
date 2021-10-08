@@ -95,8 +95,4 @@ public enum FontType {
         }
         return FontType.TIMES_NEW_ROMAN;
     }
-
-    public int getDBIndex() {
-        return ordinal() + 1;
-    }
 }

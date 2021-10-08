@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import java.sql.*;
 import java.util.HashMap;
-import java.util.Map;
+
 
 /**
  * all classes in 'module' package are for handle an SQL query
@@ -25,7 +25,7 @@ public class CredentialsMapQuery {
         buildCredentialsMap();
     }
 
-    public HashMap<String,String> buildCredentialsMap() {
+    public void buildCredentialsMap() {
 
         String query = "SELECT user_name, password FROM users";
 
@@ -48,7 +48,6 @@ public class CredentialsMapQuery {
         }
        // for (Map.Entry<String, String> entry : credentialsMap.entrySet()) {
          //   System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());}
-        return credentialsMap;
     }
 }
 

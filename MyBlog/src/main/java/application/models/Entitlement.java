@@ -19,8 +19,4 @@ public enum Entitlement {
         }
         return Entitlement.USER;
     }
-
-    public int getDBIndex() {
-        return ordinal() + 1;
-    }
 }

@@ -23,7 +23,7 @@ public class ListAllUsersPerEntitlementQueryTest {
                         13,
                       "BlackSheep",
                       "peehSkcalb",
-                        Entitlement.valueOf("admin"),
+                        Entitlement.valueOf("ADMIN"),
                         LocalDateTime.of(2021,9,1,1,0)
                 )
         );

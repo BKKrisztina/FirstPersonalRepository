@@ -16,8 +16,4 @@ public enum Status {
         }
         return Status.DRAFT;
     }
-
-    public int getDBIndex() {
-        return ordinal() + 1;
-    }
 }
