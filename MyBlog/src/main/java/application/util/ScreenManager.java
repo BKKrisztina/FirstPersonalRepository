@@ -44,29 +44,31 @@ public class ScreenManager {
     CredentialsMapQuery credentialsMapQuery = new CredentialsMapQuery();
 
     public String ifRegistered(int attemptCounter) {
-        //if (attemptCounter > 3) {
+    if(attemptCounter < 3){
             Scanner scanner = new Scanner(System.in);
             System.out.println(welcome);
             System.out.println(ifRegistered);
             String registeredAnswer = scanner.nextLine();
 
             if (registeredAnswer.equalsIgnoreCase("Y")) {
-                askUserName(0);
+                askUserName();
             } else if (registeredAnswer.equalsIgnoreCase("N")) {
                 notRegistered();
             } else {
+                //attemptCounter++;
                 System.out.println("Wrong input, try again!");
-                //ifRegistered(++attemptCounter);
+                attemptCounter++;
+                ifRegistered(attemptCounter);
             }
-      //  } else {
-           // System.out.println("Attempt limit passed!");
-      //  }
+        } else {
+            System.out.println("Attempt limit passed!");
+        }
         return registeredAnswer;
     }
 
-    public Users askUserName(int attemptCounter) {
+    public Users askUserName() {
         Users myUsers = null;
-        //if (attemptCounter > 3) {
+
             Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Username");
             String usernameEntered = scanner.nextLine();
@@ -78,22 +80,20 @@ public class ScreenManager {
                 if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
                     askPassword(usernameEntered, 0);
                 } else {
-                    wrongUserName(++attemptCounter);
+                    wrongUserName(1);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-      //  } else {
-          //  System.out.println("Attempt limit passed!");
-      //  }
         return myUsers;
     }
 
     public String askPassword(String usernameEntered, int attemptCounter) {
-      //  if (attemptCounter > 3) {
+
             Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Password");
             String passwordEntered = scanner.nextLine();
+
             MyUser = showGivenUserData(usernameEntered);
             if (credentialsMapQuery.credentialsMap.get(usernameEntered).equals(passwordEntered)) {
                 //System.out.println("The key for value " + passwordEntered + " is " + entry.getKey());
@@ -104,11 +104,9 @@ public class ScreenManager {
                 //TODO write method to choose options - entitlementChecker
                 givenUserDataQuery.entitlementChecker(showGivenUserData(usernameEntered));
             } else {
-                wrongPW(++attemptCounter);
+                wrongPW(attemptCounter);
             }
-     //   } else {
-     //       System.out.println("Attempt limit passed!");
-     //   }
+
         return passwordEntered;
     }
 
@@ -166,19 +164,22 @@ public class ScreenManager {
     }
 
     public void wrongUserName(int attemptCounter) {
-        if (attemptCounter > 3) {
+
+        if (attemptCounter < 3) {
             System.out.println("This userName is not registered, try again! " +
                     "(You will be re-directed to the welcome page)");
-            ifRegistered(++attemptCounter);
-        } else {
+           ifRegistered(attemptCounter);
+       } else {
             System.out.println("Attempt limit passed!");
         }
     }
 
     public void wrongPW(int attemptCounter) {
-        if (attemptCounter > 3) {
-            System.out.println("Wrong password, try again! ");
-            askPassword(MyUser.getUserName(), ++attemptCounter);
+        attemptCounter++;
+        if (attemptCounter < 3) {
+            System.out.println("Wrong password, try again! " +
+                    "(You will be re-directed to the welcome page)");
+            askPassword(MyUser.getUserName(), attemptCounter);
         } else {
             System.out.println("Attempt limit passed!");
         }

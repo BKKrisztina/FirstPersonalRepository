@@ -98,7 +98,7 @@ public class QueryManager {
      * */
 
     public void runSecond(int attemptCounter){
-        if(attemptCounter < 3){
+        //if(attemptCounter < 3){
         try{
             Scanner scanner = new Scanner(System.in);
             System.out.println(runSecondRequestInput);
@@ -122,17 +122,17 @@ public class QueryManager {
             }
         } catch (Exception e) {
             e.printStackTrace();}}
-        else{
-            System.out.println("Attempt limit passed!");
-        }
-    }
+        //else{
+           // System.out.println("Attempt limit passed!");
+        //}
+    //}
     /**
      * this method requests the parameter for the method (module.listGivenUsersBlogPostsQuery)
      * --the user name for giving back all comment from the selected user--
      * from the user, then the method gives back the result
      * */
     public void runThird(int attemptCounter){
-        if(attemptCounter > 3){
+        //if(attemptCounter > 3){
         try{
             Scanner scanner = new Scanner(System.in);
             System.out.println(runThirdRequestInput);
@@ -152,9 +152,9 @@ public class QueryManager {
        }
         catch (Exception e) {
             e.printStackTrace();}
-        } else{
-            System.out.println("Attempt limit passed!");
-        }
+        //} else{
+          //  System.out.println("Attempt limit passed!");
+        //}
 
     }
     /**
@@ -163,7 +163,7 @@ public class QueryManager {
      * from the user, then the method gives back the result
      * */
     public void runFourth(int attemptCounter){
-if(attemptCounter > 3){
+        //if(attemptCounter > 3){
         try{
             Scanner scanner = new Scanner(System.in);
             System.out.println(runFourthRequestInput);
@@ -185,17 +185,18 @@ if(attemptCounter > 3){
             }
         } catch (Exception e) {
             e.printStackTrace();}}
-else{
-    System.out.println("Attempt limit passed!");
-}
-    }
+        //else{
+    //System.out.println("Attempt limit passed!");
+        //}
+    //}
+
     /**
      * this method requests the parameter for the method (module.listAllCommentsOfBlogQuery)
      * --the BlogPostID for giving back all comments related the selected BlogPost--
      * from the user, then the method gives back the result
      * */
     public void runFifth(int attemptCounter) {
-        if (attemptCounter > 3) {
+        //if (attemptCounter > 3) {
             try {
                 Scanner scanner = new Scanner(System.in);
                 System.out.println(runFifthRequestInput);
@@ -215,9 +216,9 @@ else{
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        } else {
+        //} else {
             System.out.println("Attempt limit passed!");
-        }
+       // }
     }
 
         public void runSixth(){
