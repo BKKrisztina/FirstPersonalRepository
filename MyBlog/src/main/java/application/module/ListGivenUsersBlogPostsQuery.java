@@ -1,15 +1,8 @@
 package application.module;
-
 import application.database.DBEngine;
 import application.models.BlogPosts;
-import application.models.Entitlement;
-import application.models.Users;
-
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,11 +12,9 @@ public class ListGivenUsersBlogPostsQuery {
      * this method handles the query itself, which gives back all of the bog posts created by a selected (blog)user
      * util.QueryManager calls this method
      */
-    DBEngine engine = new DBEngine();
+    static DBEngine engine = new DBEngine();
 
-    public List<BlogPosts> listGivenUsersBlogPosts(String searchUser) {
-//SELECT * FROM subjects JOIN subjects2courses ON subjects.id = subjects2courses.subject_id
-// WHERE subjects2courses.schedule_day ='saturday' OR subjects2courses.schedule_day ='sunday' ORDER BY schedule_day,schedule_hour;
+    public static List<BlogPosts> listGivenUsersBlogPosts(String searchUser) {
 
         String query = "SELECT * FROM blogposts JOIN users ON blogger_ID = users.user_id WHERE users.User_name = ?";
 
@@ -35,12 +26,11 @@ public class ListGivenUsersBlogPostsQuery {
             ResultSet resultSet = ps.executeQuery();
 
             while (resultSet.next()) {
-                int blogpostID = resultSet.getInt("blogposts_ID");        // resultSet.getLong(1);
+                int blogpostID = resultSet.getInt("blogposts_ID");
                 int bloggerID = resultSet.getInt("blogger_ID");
                 String blogPostName = resultSet.getString("blog_post_name");
-                Timestamp blogPostTime = resultSet.getTimestamp("blog_post_time");
+                LocalDateTime blogPostTime = resultSet.getTimestamp("blog_post_time").toLocalDateTime();
                 String blogText = resultSet.getString("blog_text");
-
 
                 BlogPosts blogPosts = new BlogPosts(blogpostID, bloggerID, blogPostName, blogPostTime,blogText);
 

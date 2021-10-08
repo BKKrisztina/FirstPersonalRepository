@@ -1,6 +1,9 @@
 package application.models;
 
+import java.sql.Time;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+
 /**
  * this class is to handle the SQL database 'MyBlog' users table data
  */
@@ -10,13 +13,13 @@ public class Users {
     private String userName;
     private String password;
     private Entitlement entitlement;
-    private Timestamp registrationTime;
+    private LocalDateTime registrationTime;
     private byte[] profilePicture;
 
     public Users() {
     }
 
-    public Users(int userID, String userName, String password, Entitlement entitlement, Timestamp registrationTime, byte[] profilePicture) {
+    public Users(int userID, String userName, String password, Entitlement entitlement, LocalDateTime registrationTime, byte[] profilePicture) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -24,7 +27,7 @@ public class Users {
         this.registrationTime = registrationTime;
         this.profilePicture = profilePicture;
     }
-    public Users(int userID, String userName, String password, Entitlement entitlement, Timestamp registrationTime) {
+    public Users(int userID, String userName, String password, Entitlement entitlement, LocalDateTime registrationTime) {
         this.userID = userID;
         this.userName = userName;
         this.password = password;
@@ -42,6 +45,10 @@ public class Users {
         this.userName = userName;
         this.entitlement = entitlement;
     }
+
+    public Users(Users showGivenUserData) {
+    }
+
 
     public int getUserID() {
         return userID;
@@ -75,11 +82,11 @@ public class Users {
         this.entitlement = entitlement;
     }
 
-    public Timestamp getRegistrationTime() {
+    public LocalDateTime getRegistrationTime() {
         return registrationTime;
     }
 
-    public void setRegistrationTime(Timestamp registrationTime) {
+    public void setRegistrationTime(LocalDateTime registrationTime) {
         this.registrationTime = registrationTime;
     }
 

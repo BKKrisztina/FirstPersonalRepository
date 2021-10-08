@@ -1,9 +1,13 @@
 package application.util;
+
+import application.models.Users;
 import application.module.CredentialsMapQuery;
 import application.module.GivenUserDataQuery;
 import lombok.Getter;
-import lombok.Setter;
+
 import java.util.Scanner;
+
+import static application.module.GivenUserDataQuery.showGivenUserData;
 
 /**
  * this class is for interacting with the user
@@ -12,21 +16,21 @@ import java.util.Scanner;
  */
 
 public class ScreenManager {
+
+    @Getter
+    public Users MyUser;
     @Getter
     public String registeredAnswer;
     @Getter
-    public static String usernameEntered;
+    public String usernameEntered;
     @Getter
-    public static String passwordEntered;
+    public String passwordEntered;
     @Getter
     public int userOpAnswer;
     @Getter
     public int moderatorOpAnswer;
     @Getter
     public int adminOpAnswer;
-    @Getter
-    @Setter
-    private int attemptCounter = 0;
 
     private String welcome = "Welcome to myBlog community!";
     private String ifRegistered = "Are you a registered member already?" + "\n" + "Choose Y/N";
@@ -39,70 +43,72 @@ public class ScreenManager {
     static QueryManager queryHandler = new QueryManager();
     CredentialsMapQuery credentialsMapQuery = new CredentialsMapQuery();
 
-    public String ifRegistered() {
-
-        Scanner scanner = new Scanner(System.in);
-        if (attemptCounter < 4) {
+    public String ifRegistered(int attemptCounter) {
+        //if (attemptCounter > 3) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println(welcome);
             System.out.println(ifRegistered);
             String registeredAnswer = scanner.nextLine();
-            attemptCounter += 1;
+
             if (registeredAnswer.equalsIgnoreCase("Y")) {
-                askUserName();
+                askUserName(0);
             } else if (registeredAnswer.equalsIgnoreCase("N")) {
                 notRegistered();
             } else {
-                System.out.println("Wrong input, try again!" + "\n" +"Attempts left: " +(3-attemptCounter) + "\n");
-                ifRegistered();
+                System.out.println("Wrong input, try again!");
+                //ifRegistered(++attemptCounter);
             }
-        } else {
-            System.out.println(attemptLimitPassed);
-        }
+      //  } else {
+           // System.out.println("Attempt limit passed!");
+      //  }
         return registeredAnswer;
     }
-    public String askUserName() {
-        Scanner scanner = new Scanner(System.in);
-        attemptCounter = 0;
-        if (attemptCounter < 4) {
+
+    public Users askUserName(int attemptCounter) {
+        Users myUsers = null;
+        //if (attemptCounter > 3) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Username");
             String usernameEntered = scanner.nextLine();
-            attemptCounter += 1;
-//TODO nullpointer exception
-            try {
-                if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
-                    askPassword(usernameEntered);
-                } else {
-                    wrongUserName();
-                }
-            } catch (NullPointerException e) {
-                e.printStackTrace();
-                System.out.println("Nullpointer Exception");}
-        }else{
-        System.out.println(attemptLimitPassed);}
-            return usernameEntered;
-        }
+          myUsers = showGivenUserData(usernameEntered);
+            //TODO lekérem az adatait és osztályváltozóként eltárolom, ide vissza tudok nyúlni bármikor
 
-    public String askPassword(String usernameEntered) {
-        Scanner scanner = new Scanner(System.in);
-        attemptCounter = 0;
-        if (attemptCounter < 4) {
+            try {
+
+                if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
+                    askPassword(usernameEntered, 0);
+                } else {
+                    wrongUserName(++attemptCounter);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+      //  } else {
+          //  System.out.println("Attempt limit passed!");
+      //  }
+        return myUsers;
+    }
+
+    public String askPassword(String usernameEntered, int attemptCounter) {
+      //  if (attemptCounter > 3) {
+            Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Password");
             String passwordEntered = scanner.nextLine();
-            attemptCounter += 1;
+            MyUser = showGivenUserData(usernameEntered);
             if (credentialsMapQuery.credentialsMap.get(usernameEntered).equals(passwordEntered)) {
                 //System.out.println("The key for value " + passwordEntered + " is " + entry.getKey());
+                GivenUserDataQuery givenUserDataQuery = new GivenUserDataQuery();
+                //if(GivenUserDataQuery.credentialsChecker(usernameEntered,passwordEntered) == true){
+
                 System.out.println("Credentials are ok, you can continue");
                 //TODO write method to choose options - entitlementChecker
-
-
-                GivenUserDataQuery givenUserDataQuery = new GivenUserDataQuery();
-
-                givenUserDataQuery.entitlementChecker(givenUserDataQuery.showGivenUserData(usernameEntered));
-               } else {
-                    wrongPW();
-        }}
-        else{
-                System.out.println(attemptLimitPassed);}
+                givenUserDataQuery.entitlementChecker(showGivenUserData(usernameEntered));
+            } else {
+                wrongPW(++attemptCounter);
+            }
+     //   } else {
+     //       System.out.println("Attempt limit passed!");
+     //   }
         return passwordEntered;
     }
 
@@ -114,9 +120,11 @@ public class ScreenManager {
                 4 - Read Blogs per user
                 5 - Read Comments of Blog""");
         int userOpAnswer = scanner.nextInt();
-        if((userOpAnswer == 3) ||(userOpAnswer == 4) ||(userOpAnswer == 5)){
-        queryHandler.querySelector(userOpAnswer);}
-        System.out.println(wrongInput);
+        if ((userOpAnswer == 3) || (userOpAnswer == 4) || (userOpAnswer == 5)) {
+            queryHandler.querySelector(userOpAnswer);
+        } else {
+            System.out.println(wrongInput);
+        }
         return userOpAnswer;
     }
 
@@ -129,9 +137,11 @@ public class ScreenManager {
                 5 - Read Comments of Blog
                 6 - Delete Comments""");
         int moderatorOpAnswer = scanner.nextInt();
-        if((moderatorOpAnswer == 3) ||(moderatorOpAnswer == 4) ||(moderatorOpAnswer == 5) ||(moderatorOpAnswer == 6)){
-        queryHandler.querySelector(moderatorOpAnswer);}
-        System.out.println(wrongInput);
+        if ((moderatorOpAnswer == 3) || (moderatorOpAnswer == 4) || (moderatorOpAnswer == 5) || (moderatorOpAnswer == 6)) {
+            queryHandler.querySelector(moderatorOpAnswer);
+        } else {
+            System.out.println(wrongInput);
+        }
         return moderatorOpAnswer;
     }
 
@@ -146,39 +156,37 @@ public class ScreenManager {
                 5 - Read Comments of Blog
                 6 - Delete Comments""");
         int adminOpAnswer = scanner.nextInt();
-        if((adminOpAnswer == 1) ||(adminOpAnswer == 2) ||(adminOpAnswer == 3) ||(adminOpAnswer == 4)
-                ||(adminOpAnswer == 5) ||(adminOpAnswer == 6)){
-        queryHandler.querySelector(adminOpAnswer);}
-//TODO WRONG INPUT -ot mindig kiirja!!!!!
-        System.out.println(wrongInput+"\n");
+        if ((adminOpAnswer == 1) || (adminOpAnswer == 2) || (adminOpAnswer == 3) || (adminOpAnswer == 4)
+                || (adminOpAnswer == 5) || (adminOpAnswer == 6)) {
+            queryHandler.querySelector(adminOpAnswer);
+        } else {
+            System.out.println(wrongInput + "\n");
+        }
         return adminOpAnswer;
     }
 
-    public void wrongUserName() {
-
-        attemptCounter++;
-        System.out.println("This userName is not registered, try again! " +
-                "(After the third attempt you will be re-directed to the welcome page)");
-        if (attemptCounter < 9) {
-            askUserName();
+    public void wrongUserName(int attemptCounter) {
+        if (attemptCounter > 3) {
+            System.out.println("This userName is not registered, try again! " +
+                    "(You will be re-directed to the welcome page)");
+            ifRegistered(++attemptCounter);
         } else {
-            ifRegistered();
+            System.out.println("Attempt limit passed!");
         }
     }
 
-    public void wrongPW() {
-        attemptCounter++;
-        System.out.println("Wrong password, try again! " +
-                "(After the third attempt you will be re-directed to the welcome page)");
-        if (attemptCounter < 9) {
-            askPassword(usernameEntered);
+    public void wrongPW(int attemptCounter) {
+        if (attemptCounter > 3) {
+            System.out.println("Wrong password, try again! ");
+            askPassword(MyUser.getUserName(), ++attemptCounter);
         } else {
-            ifRegistered();
+            System.out.println("Attempt limit passed!");
         }
     }
+
 
     public void notRegistered() {
-        attemptCounter++;
+
         System.out.println("""
                 You can continue as visitor, and read blogs, blogposts
                 It it so much fun, and you see it's worth to stay and register
@@ -186,25 +194,20 @@ public class ScreenManager {
                 CHOOSE one of the options below:\s
                 4 - Read Blogs per user
                 3 - Read BlogPosts per user""");
-        if(attemptCounter <3){
-       try {
+
+        try {
             Scanner scanner = new Scanner(System.in);
             int notRegisteredAnswer = scanner.nextInt();
-
             if (notRegisteredAnswer == 3) {
                 queryHandler.querySelector(notRegisteredAnswer);
             } else if (notRegisteredAnswer == 4) {
                 queryHandler.querySelector(notRegisteredAnswer);
+            } else {
+                System.out.println("Wrong number selected!" + "\n");
+                notRegistered();
             }
-            System.out.println("Wrong number selected!" + "\n");
-            notRegistered();
-
         } catch (Exception e) {
-           System.out.println(wrongInput +"\n");
-           notRegistered();}
-
-       }else {
-                ifRegistered();
-            }
+            e.printStackTrace();
+        }
     }
 }

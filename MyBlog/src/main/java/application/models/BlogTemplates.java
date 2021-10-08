@@ -1,18 +1,21 @@
 package application.models;
 
+import lombok.Getter;
+
 /**
  * this class is to handle the SQL database 'MyBlog' blog_templates table data
  */
 public class BlogTemplates {
-
+    @Getter
     private int blogTemplateID;
+    @Getter
     private String templateName;
+    @Getter
     private FontColour fontColour;
+    @Getter
     private FontType fontType;
+    @Getter
     private byte[] backgroundImage;
-
-    public BlogTemplates() {
-    }
 
     public BlogTemplates(int blogTemplateID, String templateName, FontColour fontColour, FontType fontType, byte[] backgroundImage) {
         this.blogTemplateID = blogTemplateID;
@@ -29,43 +32,4 @@ public class BlogTemplates {
 
     }
 
-    public int getBlogTemplateID() {
-        return blogTemplateID;
-    }
-
-    public void setBlogTemplateID(int blogTemplateID) {
-        this.blogTemplateID = blogTemplateID;
-    }
-
-    public String getTemplateName() {
-        return templateName;
-    }
-
-    public void setTemplateName(String templateName) {
-        this.templateName = templateName;
-    }
-
-    public FontColour getFontColour() {
-        return fontColour;
-    }
-
-    public void setFontColour(FontColour fontColour) {
-        this.fontColour = fontColour;
-    }
-
-    public FontType getFontType() {
-        return fontType;
-    }
-
-    public void setFontType(FontType fontType) {
-        this.fontType = fontType;
-    }
-
-    public byte[] getBackgroundImage() {
-        return backgroundImage;
-    }
-
-    public void setBackgroundImage(byte[] backgroundImage) {
-        this.backgroundImage = backgroundImage;
-    }
 }

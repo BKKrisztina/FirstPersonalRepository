@@ -1,13 +1,12 @@
 package application.module;
-
 import application.database.DBEngine;
 import application.models.Entitlement;
 import application.models.Users;
 import application.util.ScreenManager;
-
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+
+
 
 public class GivenUserDataQuery {
     /**
@@ -15,9 +14,9 @@ public class GivenUserDataQuery {
      * util.ScreenManager calls this method
      */
 
-    DBEngine engine = new DBEngine();
+    static DBEngine engine = new DBEngine();
 
-    public Users showGivenUserData(String searchUser) {
+    public static Users showGivenUserData(String searchUser) {
 
         String query = "SELECT * FROM users WHERE User_name = ?";
 
@@ -35,7 +34,7 @@ public class GivenUserDataQuery {
                 String password = resultSet.getString("password");
                 String entitlementFromDB = resultSet.getString("entitlement");
                 Entitlement entitlement = Entitlement.find(entitlementFromDB);
-                Timestamp registrationTime = resultSet.getTimestamp("reg_time");
+                LocalDateTime registrationTime = resultSet.getTimestamp("reg_time").toLocalDateTime();
 
                 result = new Users(userID, userName, password, entitlement, registrationTime);
             }
@@ -66,14 +65,15 @@ public class GivenUserDataQuery {
         }
     }
 
-    public boolean credentialsChecker(Users result, String password) {
+    public static boolean credentialsChecker(String usernameEntered, String passwordEntered) {
         ScreenManager screenManager = new ScreenManager();
         boolean credentials = false;
-        if(result.getPassword().equals(password)){
+        if(showGivenUserData(usernameEntered).getPassword().equals(passwordEntered))
+{
             credentials = true;
             System.out.println("Credentials are ok, you can continue");
         }
-        screenManager.wrongPW();
+        //screenManager.wrongPW();
         return credentials;
     }
 }

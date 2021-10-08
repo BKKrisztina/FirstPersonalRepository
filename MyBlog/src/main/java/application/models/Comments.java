@@ -1,6 +1,8 @@
 package application.models;
 
-import java.sql.Timestamp;
+
+import java.time.LocalDateTime;
+
 /**
  * this class is to handle the SQL database 'MyBlog' comments table data
  */
@@ -8,7 +10,7 @@ public class Comments {
 
     private int commentID;
     private String commentText;
-    private Timestamp commentTime;
+    private LocalDateTime commentTime; // String
     private Status status;
     private int commenterID;
     private int commentBlogID;
@@ -17,7 +19,7 @@ public class Comments {
     public Comments() {
     }
 
-    public Comments(int commentID, String commentText, Timestamp commentTime, Status status, int commenterID, int commentBlogID, int history_comment_ID) {
+    public Comments(int commentID, String commentText, LocalDateTime commentTime, Status status, int commenterID, int commentBlogID, int history_comment_ID) {
         this.commentID = commentID;
         this.commentText = commentText;
         this.commentTime = commentTime;
@@ -43,11 +45,11 @@ public class Comments {
         this.commentText = commentText;
     }
 
-    public Timestamp getCommentTime() {
+    public LocalDateTime getCommentTime() {
         return commentTime;
     }
 
-    public void setCommentTime(Timestamp commentTime) {
+    public void setCommentTime(LocalDateTime commentTime) {
         this.commentTime = commentTime;
     }
 

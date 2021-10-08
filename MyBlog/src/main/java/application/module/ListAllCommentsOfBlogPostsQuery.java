@@ -1,28 +1,21 @@
 package application.module;
-
 import application.database.DBEngine;
 import application.models.Comments;
-import application.models.Entitlement;
 import application.models.Status;
-import application.models.Users;
-
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Timestamp;
+import java.sql.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListAllCommentsOfBlogQuery {
+public class ListAllCommentsOfBlogPostsQuery {
     /**
      * this method handles the query itself, which gives back all comments of a selected blogPost
      * util.QueryManager calls this method
      */
-    DBEngine engine = new DBEngine();
+    static DBEngine engine = new DBEngine();
 
-    public List<Comments> listAllCommentsOfBlogPosts(int searchBlogPostID) {
-//SELECT * FROM subjects JOIN subjects2courses ON subjects.id = subjects2courses.subject_id
-// WHERE subjects2courses.schedule_day ='saturday' OR subjects2courses.schedule_day ='sunday' ORDER BY schedule_day,schedule_hour;
+    public static List<Comments> listAllCommentsOfBlogPosts(int searchBlogPostID) {
+
         String query = "SELECT * FROM comments JOIN blogposts ON blog_ref_ID = blogposts.blogposts_id WHERE blogposts_id = ?";
 
         List<Comments> commentList = new ArrayList<>();
@@ -35,7 +28,7 @@ public class ListAllCommentsOfBlogQuery {
             while (resultSet.next()) {
                 int commentID = resultSet.getInt("comment_id");        // resultSet.getLong(1);
                 String commentText = resultSet.getString("comment_text");
-                Timestamp commentTime = resultSet.getTimestamp("comment_time");
+                LocalDateTime commentTime = resultSet.getTimestamp("comment_time").toLocalDateTime();
                 String statusFromDB = resultSet.getString("comment_status");
                 Status status = Status.find(statusFromDB);
                 int commenterID = resultSet.getInt("commenter_ID");

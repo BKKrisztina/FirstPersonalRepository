@@ -1,11 +1,8 @@
 package application.module;
-
 import application.database.DBEngine;
-
 import application.models.Users;
 import lombok.Getter;
 import lombok.Setter;
-
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -32,7 +29,6 @@ public class CredentialsMapQuery {
 
         String query = "SELECT user_name, password FROM users";
 
-
         credentialsMap = new HashMap<>();
 
         try {
@@ -50,8 +46,8 @@ public class CredentialsMapQuery {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        for (Map.Entry<String, String> entry : credentialsMap.entrySet()) {
-            System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());}
+       // for (Map.Entry<String, String> entry : credentialsMap.entrySet()) {
+         //   System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());}
         return credentialsMap;
     }
 }
