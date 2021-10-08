@@ -40,6 +40,7 @@ public class QueryManager {
     ListGivenUsersBlogsQuery listGivenUsersBlogsQuery = new ListGivenUsersBlogsQuery();
     ListAllCommentsOfBlogPostsQuery listAllCommentsOfBlogQuery = new ListAllCommentsOfBlogPostsQuery();
     CredentialsMapQuery credentialsMapQuery = new CredentialsMapQuery();
+    ScreenManager screenManager = new ScreenManager();
 
     /**
      *this method is responsible to direct to the method to run based on the users input
@@ -77,7 +78,7 @@ public class QueryManager {
                     Users searchUser = givenUserDataQuery.showGivenUserData(runFirstAnswer);
                     System.out.println(searchUser.getUserName() + ", " + searchUser.getUserID() +
                             ", " + searchUser.getEntitlement() + ", " + searchUser.getRegistrationTime());
-                    nextQueryAdmin();
+                    nextQuery();
                 } else {
                     System.out.println(notRegisteredUser);
                     runFirst(++attemptCounter);
@@ -109,7 +110,7 @@ public class QueryManager {
                     ||runSecondAnswer.equalsIgnoreCase("moderator")) {
                 userList.forEach(users -> System.out.println(users.getUserName() + ", " + users.getUserID() +
                         ", " + users.getEntitlement() + ", " + users.getRegistrationTime()));
-                nextQueryAdmin();
+                nextQuery();
             }else{
                 System.out.println("This entitlement does not exist");
                 System.out.println("""
@@ -142,7 +143,7 @@ public class QueryManager {
                 if(blogPostsList.size()!=0){
                     blogPostsList.forEach(blogPosts -> System.out.println("Blogpost ID: " + blogPosts.getBlogPostID() + ", Blogpost name: "
                             + blogPosts.getBlogPostName() + ", Blogpost created: " + blogPosts.getBlogPostTime()));
-                    nextQueryUser();
+                    nextQuery();
                 }else{
                     System.out.println(runThirdAnswer +" user does not created any blogs!");
                 }}else{
@@ -176,7 +177,7 @@ public class QueryManager {
                     blogList.forEach(blog -> System.out.println("Blog name: "
                             + blog.getBlogName() + ", Blogpost template name: "+ blog.getBlogTemplateName()
                             + ", Blog created: " + blog.getCreationTime()));
-                    nextQueryUser();
+                    nextQuery();
                 }else{
                     System.out.println(runFourthAnswer +" user does not created any blogs!");
                 }}else{
@@ -209,7 +210,7 @@ public class QueryManager {
                             + comments.getCommentText() + ", comment time: " + comments.getCommentTime()
                             + ", commenter ID: " + comments.getCommentID() + ", history comments ID: "
                             + comments.getHistory_comment_ID()));
-                    nextQueryUser();
+                    nextQuery();
                 } else {
                     System.out.println("No comments arrived to this blog post!");
                 }
@@ -228,34 +229,23 @@ public class QueryManager {
     /**
      * these methods calls re-direct to the methods which offer the available options based on the user entitlement
      */
-    public void nextQueryAdmin(){
+    public void nextQuery() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("New query? Y/N");
         String nextQuery = scanner.nextLine();
-        if(nextQuery.equalsIgnoreCase("Y")){
-            ScreenManager.adminOptions();}
-        else{
+        if (nextQuery.equalsIgnoreCase("Y")) {
+            if (screenManager.myUsers.getEntitlement().toString().equalsIgnoreCase("USER")) {
+                ScreenManager.userOptions();
+            } else if (screenManager.myUsers.getEntitlement().toString().equalsIgnoreCase("MODERATOR")) {
+                ScreenManager.moderatorOptions();
+            } else if (screenManager.myUsers.getEntitlement().toString().equalsIgnoreCase("ADMIN")) {
+                ScreenManager.adminOptions();
+            } else {
+            screenManager.notRegistered();
+            }
+        }else{
             System.out.println("Goodbye!");
         }
     }
-    public void nextQueryModerator(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("New query? Y/N");
-        String nextQuery = scanner.nextLine();
-        if(nextQuery.equalsIgnoreCase("Y")){
-            ScreenManager.moderatorOptions();}
-        else{
-            System.out.println("Goodbye!");
-        }
-    }
-    public void nextQueryUser(){
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("New query? Y/N");
-        String nextQuery = scanner.nextLine();
-        if(nextQuery.equalsIgnoreCase("Y")){
-            ScreenManager.userOptions();}
-        else{
-            System.out.println("Goodbye!");
-        }
-    }
+
 }

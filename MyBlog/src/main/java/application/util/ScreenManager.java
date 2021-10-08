@@ -18,7 +18,7 @@ import static application.module.GivenUserDataQuery.showGivenUserData;
 public class ScreenManager {
 
     @Getter
-    public Users MyUser;
+    public Users myUsers;
     @Getter
     public String registeredAnswer;
     @Getter
@@ -41,9 +41,10 @@ public class ScreenManager {
     }
 
     static QueryManager queryHandler = new QueryManager();
+    GivenUserDataQuery givenUserDataQuery = new GivenUserDataQuery();
     CredentialsMapQuery credentialsMapQuery = new CredentialsMapQuery();
 
-    public String ifRegistered(int attemptCounter) {
+    public Users ifRegistered(int attemptCounter) {
     if(attemptCounter < 3){
             Scanner scanner = new Scanner(System.in);
             System.out.println(welcome);
@@ -55,7 +56,6 @@ public class ScreenManager {
             } else if (registeredAnswer.equalsIgnoreCase("N")) {
                 notRegistered();
             } else {
-                //attemptCounter++;
                 System.out.println("Wrong input, try again!");
                 attemptCounter++;
                 ifRegistered(attemptCounter);
@@ -63,39 +63,40 @@ public class ScreenManager {
         } else {
             System.out.println("Attempt limit passed!");
         }
-        return registeredAnswer;
+        return myUsers;
     }
 
-    public Users askUserName() {
-        Users myUsers = null;
+    public void askUserName() {
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Username");
             String usernameEntered = scanner.nextLine();
-          myUsers = showGivenUserData(usernameEntered);
+          Users myUsers = showGivenUserData(usernameEntered);
+        System.out.println(myUsers.getUserName() +","+ myUsers.getPassword()+","+myUsers.getEntitlement());
             //TODO lekérem az adatait és osztályváltozóként eltárolom, ide vissza tudok nyúlni bármikor
 
             try {
-
-                if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
-                    askPassword(usernameEntered, 0);
+                if (myUsers.getUserName().equalsIgnoreCase(usernameEntered)){
+                //if (credentialsMapQuery.credentialsMap.containsKey(usernameEntered)) {
+                    askPassword(myUsers,0);
                 } else {
                     wrongUserName(1);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        return myUsers;
+        //return myUsers;
     }
 
-    public String askPassword(String usernameEntered, int attemptCounter) {
+/*    public String askPassword(String usernameEntered, int attemptCounter) {
 
             Scanner scanner = new Scanner(System.in);
             System.out.println("Please enter your Password");
             String passwordEntered = scanner.nextLine();
 
-            MyUser = showGivenUserData(usernameEntered);
-            if (credentialsMapQuery.credentialsMap.get(usernameEntered).equals(passwordEntered)) {
+            //myUsers = givenUserDataQuery.showGivenUserData(usernameEntered);
+            if (myUsers.getPassword().equals(passwordEntered)){
+            //(credentialsMapQuery.credentialsMap.get(usernameEntered).equals(passwordEntered)) {
                 //System.out.println("The key for value " + passwordEntered + " is " + entry.getKey());
                 GivenUserDataQuery givenUserDataQuery = new GivenUserDataQuery();
                 //if(GivenUserDataQuery.credentialsChecker(usernameEntered,passwordEntered) == true){
@@ -108,7 +109,26 @@ public class ScreenManager {
             }
 
         return passwordEntered;
+    }*/
+
+    public void askPassword(Users myUsers,int attemptCounter){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter your Password");
+        String passwordEntered = scanner.nextLine();
+        if(myUsers.getPassword().equals(passwordEntered)){
+            System.out.println("Credentials are ok, you can continue");
+            if(myUsers.getEntitlement().toString().equals("USER")) {
+                userOptions();
+            }else if(myUsers.getEntitlement().toString().equals("MODERATOR")) {
+                moderatorOptions();
+            }else{
+                adminOptions();
+            }
+        }else {
+        wrongPW(myUsers,attemptCounter);
     }
+
+}
 
     public static int userOptions() {
         Scanner scanner = new Scanner(System.in);
@@ -174,17 +194,16 @@ public class ScreenManager {
         }
     }
 
-    public void wrongPW(int attemptCounter) {
+    public void wrongPW(Users myUsers,int attemptCounter) {
         attemptCounter++;
         if (attemptCounter < 3) {
             System.out.println("Wrong password, try again! " +
-                    "(You will be re-directed to the welcome page)");
-            askPassword(MyUser.getUserName(), attemptCounter);
+                    "(You have 3 attempts, then exits)");
+            askPassword(myUsers,attemptCounter);
         } else {
             System.out.println("Attempt limit passed!");
         }
     }
-
 
     public void notRegistered() {
 
